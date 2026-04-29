@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring Kesiapan Fasilitas - Pelindo</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #0b1220;
+    color: #e5e7eb;
+  }
+
+  header {
+    padding: 15px 20px;
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  /* Logo */
+  .logo {
+    height: 40px;
+  }
+
+  .header-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  header h1 {
+    margin: 0;
+    font-size: 20px;
+    color: #38bdf8;
+  }
+
+  header p {
+    margin: 0;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: #38bdf8;
+  }
+
+  .card h2 {
+    margin: 0 0 10px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 15px;
+    color: #94a3b8;
+    font-size: 12px;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <!-- LOGO -->
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Logo_PLMT_c.png/1280px-Logo_PLMT_c.png" alt="Logo Pelindo" class="logo">
+
+  <!-- TEXT -->
+  <div class="header-text">
+    <h1>Monitoring Pelindo</h1>
+    <p>Selamat datang di Monitoring Teknik</p>
+  </div>
+</header>
+
+<div class="container">
+  <div class="grid">
+
+    <div class="card" onclick="goTo('https://script.google.com/macros/s/AKfycbyf79WdI0_bYzKT1kxuFznPOz0fEhfBOh9IdUi5glpp1HOgaC0MWdz4_8KFWvc0cGVnnw/exec')">
+      <h2>Kesiapan Fasilitas</h2>
+    </div>
+
+    <div class="card" onclick="goTo('https://script.google.com/macros/s/AKfycbxKiOb7a0PXoTN2cK_yxlvFHJ72QgEFC4h_PTeuUHlzipO2gbCz9bSrfiyB6eSr42fvOw/exec')">
+      <h2>Stock Barang</h2>
+    </div>
+
+    <div class="card" onclick="goTo('link-maret.html')">
+      <h2>Sabar y bang hehe</h2>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  © 2026 Monitoring Pelindo | mhdhafizhnst
+</footer>
+
+<script>
+  function goTo(link) {
+    window.location.href = link;
+  }
+</script>
+
+</body>
+</html>
