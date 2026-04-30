@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitoring Dashboard</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI';
+  background: #0b1220;
+  color: #e5e7eb;
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #020617;
+  height: 100vh;
+  padding: 20px;
+  border-right: 1px solid #1e293b;
+}
+
+.sidebar h2 {
+  color: #38bdf8;
+}
+
+.menu a {
+  display: block;
+  padding: 12px;
+  margin: 6px 0;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.menu a:hover {
+  background: #38bdf8;
+  color: black;
+}
+
+/* Content */
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+h1 {
+  color: #38bdf8;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0f172a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 10px;
+  border-bottom: 1px solid #1e293b;
+  text-align: left;
+}
+
+th {
+  background: #020617;
+  color: #38bdf8;
+}
+
+/* Status warna */
+.status-ok { color: #22c55e; font-weight: bold; }
+.status-warning { color: #facc15; font-weight: bold; }
+.status-danger { color: #ef4444; font-weight: bold; }
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <h2>📊 Monitoring</h2>
+  <div class="menu" id="menu"></div>
+</div>
+
+<div class="content">
+  <h1 id="title">Pilih Data</h1>
+  <div id="data"></div>
+</div>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbw8_kJ7cqCRjAWDu8z0AzunRF5iUy3LTQO4gJ9d0POgGk7w_4Aly_mhOh3eJe0rAK2hlw/exec";
+let currentSheet = null;
+
+// === LOAD MENU ===
+fetch(API)
+  .then(res => res.json())
+  .then(sheets => {
+    const menu = document.getElementById("menu");
+
+    sheets.forEach(name => {
+      const a = document.createElement("a");
+      a.textContent = name;
+
+      a.onclick = () => {
+        currentSheet = name;
+        loadSheet(name);
+      };
+
+      menu.appendChild(a);
+    });
+  });
+
+// === LOAD DATA ===
+function loadSheet(sheetName) {
+  document.getElementById("title").textContent = sheetName;
+
+  fetch(API + "?sheet=" + sheetName)
+    .then(res => res.json())
+    .then(data => {
+      const container = document.getElementById("data");
+      container.innerHTML = "";
+
+      if (data.length === 0) return;
+
+      let table = "<table>";
+
+      // Header
+      table += "<tr>";
+      data[0].forEach(col => {
+        table += `<th>${col}</th>`;
+      });
+      table += "</tr>";
+
+      // Isi data
+      for (let i = 1; i < data.length; i++) {
+        table += "<tr>";
+
+        data[i].forEach(cell => {
+          let cls = "";
+
+          if (cell === "OK") cls = "status-ok";
+          else if (cell === "WARNING") cls = "status-warning";
+          else if (cell === "ERROR") cls = "status-danger";
+
+          table += `<td class="${cls}">${cell}</td>`;
+        });
+
+        table += "</tr>";
+      }
+
+      table += "</table>";
+
+      container.innerHTML = table;
+    });
+}
+
+// === AUTO REFRESH ===
+setInterval(() => {
+  if (currentSheet) loadSheet(currentSheet);
+}, 5000);
+
+</script>
+
+</body>
+</html>
